@@ -7,6 +7,16 @@ namespace DieGarage.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private static readonly Repository repository = new Repository();
+
+
+        // ###########################################################
+
+        // Azure - CosmosDB - Entity Framework
+
+        // L - DependencyInjectionKontakte
+
+        // ###########################################################
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -15,12 +25,25 @@ namespace DieGarage.Controllers
 
         public IActionResult Index()
         {
+            return View(repository.Garage);
+        }
+
+        public IActionResult FahrzeugenList()
+        {
+            return View(repository.Autos.Union(repository.Motorraders));
+        }
+
+        public IActionResult FahrzeugenEinfugen()
+        {
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public IActionResult FahrzeugenEinfugen(Fahrzeugen neueFahrzeugen)
         {
-            return View();
+            ViewBag.Meldung = repository.FahrzeugEinfugen(neueFahrzeugen);
+
+            return View(neueFahrzeugen);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Fahrzeugen>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+
+<table class="table table-bordered">
+    <tr>
+        <th>@Html.DisplayNameFor(m => m.ID)</th>
+        <th>@Html.DisplayNameFor(m => m.FahrzeugTyp)</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(m => item.ID)</td>
+            <td>@Html.DisplayFor(m => item.FahrzeugTyp)</td>
+        </tr>
+    }
+
+
+
+</table>
+
