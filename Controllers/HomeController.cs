@@ -30,35 +30,37 @@ namespace DieGarage.Controllers
 
         public IActionResult FahrzeugenList()
         {
+            return View(repository.FahrzeugenListe.OrderBy(m => m.ParkSpot));
             return View(repository.Autos.Union(repository.Motorraders));
         }
 
         public IActionResult FahrzeugenEinfugen()
         {
-            return View();
-        }
+            Fahrzeugen fahrzeugen = new Fahrzeugen();
+            ViewBag.Meldung = repository.FahrzeugEinfugen(fahrzeugen);
 
-        [HttpPost]
-        public IActionResult FahrzeugenEinfugen(Fahrzeugen neueFahrzeugen)
-        {
-            ViewBag.Meldung = repository.FahrzeugEinfugen(neueFahrzeugen);
 
+            //fahrzeugen.FahrzeugTyp = "test";
+            //fahrzeugen.Nummerschild = "test2";
+
+            Console.WriteLine("test2");
             return RedirectToAction("FahrzeugenList");
-            return View(neueFahrzeugen);
         }
+
+        //[HttpPost]
+        //public IActionResult FahrzeugenEinfugen(Fahrzeugen neueFahrzeugen)
+        //{
+        //    ViewBag.Meldung = repository.FahrzeugEinfugen(neueFahrzeugen);
+        //    Console.WriteLine("test");
+        //    return RedirectToAction("FahrzeugenList");
+        //    //return View(neueFahrzeugen);
+        //}
 
         public IActionResult Garage(int parkplätze, int etagen)
         {
-            //Console.WriteLine("Parkplätzte: {0} - Etagen: {1}", parkplätze, etagen);
-
             repository.GarageErstellen(parkplätze, etagen);
-            
 
-            //return View(garages);
-
-            //return View(repository.Erdgeschoss);
-            //return View(repository.Erdgeschoss.Union(repository.Etage));
-            return View(repository.Autos.Union(repository.Motorraders));
+            return RedirectToAction(nameof(FahrzeugenList));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

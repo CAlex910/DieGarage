@@ -5,7 +5,6 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
 
@@ -13,9 +12,11 @@
 {
     <div>
         <fieldset>
-            <button id="btnShowModal" type="button" class="btn btn-m btn-default" style="color:blue; text-decoration:underline;">
-                Parkhaus
-            </button>
+            <div class="text-center">
+                <button id="btnShowModal" type="button" class="btn btn-m btn-default" style="color:blue; text-decoration:underline;">
+                    Parkhaus
+                </button>
+            </div>
             <div class="modal fade" tabindex="-1" id="loginModal" data-keyboard="false" data-backdrop="static">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -61,7 +62,7 @@
 }
 
 
-@using (Html.BeginForm())
+@*@using (Html.BeginForm())
 {
     @Html.EditorForModel()
 
@@ -75,7 +76,7 @@
 
 <br />
 
-<h3>@ViewBag.HashCode</h3>
+<h3>@ViewBag.HashCode</h3>*@
 
 
 

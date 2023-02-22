@@ -4,26 +4,27 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Parkhaus</h1>
 </div>
+<br />
 
+<input type="button"  value="+" onclick="location.href='@Url.Action("FahrzeugenEinfugen")'" />
 
-
-<table class="table table-bordered">
-    <tr>
-        <th>@Html.DisplayNameFor(model => model.ParkSpot)</th>
-        <th>@Html.DisplayNameFor(model => model.Nummerschild)</th>
-        <th>@Html.DisplayNameFor(model => model.FahrzeugTyp)</th>
-    </tr>
-    @foreach (var item in Model)
-    {
+@if (Model != null)
+{
+    <table class="table table-bordered">
         <tr>
-            <td>@Html.DisplayFor(model => item.ParkSpot)</td>
-            <td>@Html.DisplayFor(model => item.Nummerschild)</td>
-            <td>@Html.DisplayFor(model => item.FahrzeugTyp)</td>
+            <th>@Html.DisplayNameFor(model => model.ParkSpot)</th>
+            <th>@Html.DisplayNameFor(model => model.Nummerschild)</th>
+            <th>@Html.DisplayNameFor(model => model.FahrzeugTyp)</th>
         </tr>
-    }
-
-</table>
-
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => item.ParkSpot)</td>
+                <td>@Html.DisplayFor(model => item.Nummerschild)</td>
+                <td>@Html.DisplayFor(model => item.FahrzeugTyp)</td>
+            </tr>
+        }
+    </table>
+}
