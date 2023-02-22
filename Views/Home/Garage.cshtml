@@ -16,14 +16,17 @@
         <th>@Html.DisplayNameFor(model => model.Nummerschild)</th>
         <th>@Html.DisplayNameFor(model => model.FahrzeugTyp)</th>
     </tr>
-    @foreach (var item in Model)
+    @if (Model != null)
     {
-        <tr>
-            <td>@Html.DisplayFor(model => item.ParkSpot)</td>
-            <td>@Html.DisplayFor(model => item.Nummerschild)</td>
-            <td>@Html.DisplayFor(model => item.FahrzeugTyp)</td>
-        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.ParkSpot)</td>
+                <td>@Html.DisplayFor(modelItem => item.Nummerschild)</td>
+                <td>@Html.DisplayFor(modelItem => item.FahrzeugTyp)</td>
+            </tr>
+        }
     }
 
-</table>
 
+</table>
