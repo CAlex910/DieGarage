@@ -6,8 +6,8 @@ namespace DieGarage.Models
     {
         public List<Fahrzeugen> Autos { get; set; }
         public List<Fahrzeugen> Motorraders { get; set; }
-
         public List<Fahrzeugen> FahrzeugenListe { get; set; }
+
 
         //public List<Garage> Etage { get; set; }
         //public List<Garage>? Erdgeschoss { get; set; }
@@ -29,7 +29,7 @@ namespace DieGarage.Models
             //};
         }
 
-        public string FahrzeugEinfugen(Fahrzeugen neueFahrzeugen)
+        public string? Einparken(Fahrzeugen neueFahrzeugen)
         {
             // Random Objekt erstellen
             Random random = new Random();
@@ -37,39 +37,99 @@ namespace DieGarage.Models
             // Array mit Fahrzeugen Typen
             string[] fahrzeugenTyp = { "Autos", "Motorräder" };
 
-            string[] license = {"a","b","a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z","1","2","3","4","5","6","7","8","9","0"};
-            string pattern = @"^[A-ZÖÜÄ]{1,3} [A-ZÖÜÄ]{1,2} [1-9]{1}[0-9]{1,3}$";
+            //string[] license = {"a","b","a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z","1","2","3","4","5","6","7","8","9","0"};
+            //string pattern = @"^[A-Z]{1,3} [A-Z]{1,2} [1-9]{1}[0-9]{1,3}$";
 
             int stadtKennung = random.Next(1, 4);
             int buchstabenReihe = random.Next(1, 3);
 
-
+            // Aufbau der Nummerschild
             string stadt = Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Substring(0, stadtKennung).ToUpper();
             string buchstabe = Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Substring(0, buchstabenReihe).ToUpper();
             int nummer = random.Next(1, 9999);
-
 
             var kennzeichen = string.Format("{0} {1} {2}", stadt, buchstabe, nummer);
 
             // Ein zufällige index von fahrzeugenTyp
             int index = random.Next(fahrzeugenTyp.Length);
-            try
-            {
-                // Ein zufällige Parkplatz
-                int spot = random.Next(1,Erdgeschoss.ParkPlatze);
 
-                neueFahrzeugen.FahrzeugTyp = fahrzeugenTyp[index];
-                //neueFahrzeugen.Nummerschild = Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Substring(0, 3).ToUpper();
-                neueFahrzeugen.Nummerschild = kennzeichen;
+            // ####################################################################################
+            // ####################################################################################
+
+            // Ein zufällige Parkplatz
+            int spot = random.Next(1, Erdgeschoss.ParkPlatze);
+
+            var contain = new List<int>();
+
+            neueFahrzeugen.IstBesetzt = false;
+            while (neueFahrzeugen.IstBesetzt == false)
+            {
+                Console.WriteLine("vor - " + neueFahrzeugen.IstBesetzt);
+
+                contain.Add(spot);
 
                 neueFahrzeugen.ParkSpot = spot;
+                neueFahrzeugen.FahrzeugTyp = fahrzeugenTyp[index];
+                neueFahrzeugen.Nummerschild = kennzeichen;
+
+
                 FahrzeugenListe.Add(neueFahrzeugen);
-                return "Autos angelegt";
+
+                if (contain.Contains(spot))
+                {
+                    neueFahrzeugen.IstBesetzt = true;
+                    Console.WriteLine("nach - "+neueFahrzeugen.IstBesetzt);
+                }
+            }
+
+
+            // ####################################################################################
+            // ####################################################################################
+
+            //try
+            //{
+            //    // Ein zufällige Parkplatz
+            //    int spot = random.Next(1,Erdgeschoss.ParkPlatze);
+
+            //    List<int> test = new List<int>();
+            //    test.Add(spot);
+
+            //    //neueFahrzeugen.IstBesetzt = false;
+            //    neueFahrzeugen.ParkSpot = spot;
+
+
+
+
+            //    neueFahrzeugen.FahrzeugTyp = fahrzeugenTyp[index];
+            //    //neueFahrzeugen.Nummerschild = Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Substring(0, 3).ToUpper();
+            //    neueFahrzeugen.Nummerschild = kennzeichen;
+
+            //    FahrzeugenListe.Add(neueFahrzeugen);
+            //    return "Autos angelegt";
+            //}
+            //catch (Exception e)
+            //{
+            //    return e.Message;
+            //}
+            return default;
+        }
+
+        public string? Ausparken()
+        {
+            try
+            {
+                if (FahrzeugenListe.Count() > 0)
+                {
+                    Random random = new Random();
+                    int index = random.Next(FahrzeugenListe.Count());
+                    FahrzeugenListe.RemoveAt(index);
+                }
             }
             catch (Exception e)
             {
                 return e.Message;
             }
+            return default;
         }
 
         public void GarageErstellen(int parkplätze, int etagen)
@@ -81,8 +141,9 @@ namespace DieGarage.Models
             //{
             //    new Garage { ParkPlatze = parkplätze }
             //};
-            Erdgeschoss.ParkPlatze = 33;
-            Erdgeschoss.Etagen = 2;
+            Erdgeschoss.ParkPlatze = parkplätze;
+            Erdgeschoss.Etagen = etagen;
+
             //for (int i = 0; i < parkplätze; i++)
             //{
             //    Platz = new List<Garage>()

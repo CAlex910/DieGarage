@@ -31,20 +31,23 @@ namespace DieGarage.Controllers
         public IActionResult FahrzeugenList()
         {
             return View(repository.FahrzeugenListe.OrderBy(m => m.ParkSpot));
-            return View(repository.Autos.Union(repository.Motorraders));
+            //return View(repository.Autos.Union(repository.Motorraders));
         }
 
-        public IActionResult FahrzeugenEinfugen()
+        public IActionResult Einparken()
         {
             Fahrzeugen fahrzeugen = new Fahrzeugen();
-            ViewBag.Meldung = repository.FahrzeugEinfugen(fahrzeugen);
+            ViewBag.Meldung = repository.Einparken(fahrzeugen);
 
-
-            //fahrzeugen.FahrzeugTyp = "test";
-            //fahrzeugen.Nummerschild = "test2";
-
-            Console.WriteLine("test2");
             return RedirectToAction("FahrzeugenList");
+        }
+
+        public IActionResult Ausparken()
+        {
+            Fahrzeugen fahrzeugen= new Fahrzeugen();
+            ViewBag.Meldung = repository.Ausparken();
+            return RedirectToAction("FahrzeugenList");
+
         }
 
         //[HttpPost]
