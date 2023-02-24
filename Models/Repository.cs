@@ -61,27 +61,30 @@ namespace DieGarage.Models
 
             var contain = new List<int>();
 
-            neueFahrzeugen.IstBesetzt = false;
-            while (neueFahrzeugen.IstBesetzt == false)
+            try
             {
-                Console.WriteLine("vor - " + neueFahrzeugen.IstBesetzt);
+                neueFahrzeugen.IstBesetzt = false;
+
+                if (neueFahrzeugen.IstBesetzt == false)
+                {
+                    neueFahrzeugen.ParkSpot = spot;
+                    neueFahrzeugen.FahrzeugTyp = fahrzeugenTyp[index];
+                    neueFahrzeugen.Nummerschild = kennzeichen;
+
+                    FahrzeugenListe.Add(neueFahrzeugen);
+                }                
 
                 contain.Add(spot);
 
-                neueFahrzeugen.ParkSpot = spot;
-                neueFahrzeugen.FahrzeugTyp = fahrzeugenTyp[index];
-                neueFahrzeugen.Nummerschild = kennzeichen;
-
-
-                FahrzeugenListe.Add(neueFahrzeugen);
-
-                if (contain.Contains(spot))
+                if (contain.Contains(spot) == true)
                 {
                     neueFahrzeugen.IstBesetzt = true;
-                    Console.WriteLine("nach - "+neueFahrzeugen.IstBesetzt);
                 }
             }
-
+            catch (Exception e)
+            {
+                return e.Message;
+            }
 
             // ####################################################################################
             // ####################################################################################
@@ -96,9 +99,6 @@ namespace DieGarage.Models
 
             //    //neueFahrzeugen.IstBesetzt = false;
             //    neueFahrzeugen.ParkSpot = spot;
-
-
-
 
             //    neueFahrzeugen.FahrzeugTyp = fahrzeugenTyp[index];
             //    //neueFahrzeugen.Nummerschild = Convert.ToBase64String(Guid.NewGuid().ToByteArray()).Substring(0, 3).ToUpper();
