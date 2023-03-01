@@ -9,7 +9,6 @@ namespace DieGarage.Models
         public List<Fahrzeugen> Motorraders { get; set; }
         public List<Fahrzeugen> FahrzeugenListe { get; set; }
 
-        //public Garage[,] Ebene { get; set; }
         public Garage[][] Ebene { get; set; }
 
         //Dictionary<int, Fahrzeugen> FahrzeugenTest = new Dictionary<int, Fahrzeugen>();
@@ -39,7 +38,6 @@ namespace DieGarage.Models
             int indexBuchstabenReihe = random.Next(1, 3);
 
             // Aufbau der Nummerschild
-            #region Aufbau der Nummerschild
             var nummerSchild = "";
             for (char c = 'A'; c <= 'Z'; c++)
             {
@@ -66,7 +64,7 @@ namespace DieGarage.Models
 
             // Zufällige nummer für Nummerschild
             int nummer = random.Next(1, 9999);
-            #endregion
+
             var kennzeichen = string.Format("{0} {1} {2}", stadt, buchstabe, nummer);
 
 
@@ -118,7 +116,7 @@ namespace DieGarage.Models
 
                     //foreach (var item in FahrzeugenTest)
                     //{
-                    //    Console.WriteLine("Key: {0} -- Value: {1}",item.Key, item.Value);
+                    //    Console.WriteLine("Key: {0} -- Value: {1}", item.Key, item.Value);
                     //}
 
                 }

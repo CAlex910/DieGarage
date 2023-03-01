@@ -10,14 +10,6 @@ namespace DieGarage.Controllers
         private readonly ILogger<HomeController> _logger;
         private static readonly Repository repository = new Repository();
 
-        // ###########################################################
-
-        // Azure - CosmosDB - Entity Framework
-
-        // L - DependencyInjectionKontakte
-
-        // ###########################################################
-
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
