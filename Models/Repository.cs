@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using AspNetCore;
+using System.Runtime.InteropServices;
 
 namespace DieGarage.Models
 {
@@ -8,7 +9,10 @@ namespace DieGarage.Models
         public List<Fahrzeugen> Motorraders { get; set; }
         public List<Fahrzeugen> FahrzeugenListe { get; set; }
 
-        public Garage[,] Ebene { get; set; }
+        //public Garage[,] Ebene { get; set; }
+        public Garage[][] Ebene { get; set; }
+
+        //Dictionary<int, Fahrzeugen> FahrzeugenTest = new Dictionary<int, Fahrzeugen>();
 
         //public List<Garage> Etage { get; set; }
         //public List<Garage>? Erdgeschoss { get; set; }
@@ -35,7 +39,7 @@ namespace DieGarage.Models
             int indexBuchstabenReihe = random.Next(1, 3);
 
             // Aufbau der Nummerschild
-
+            #region Aufbau der Nummerschild
             var nummerSchild = "";
             for (char c = 'A'; c <= 'Z'; c++)
             {
@@ -62,7 +66,7 @@ namespace DieGarage.Models
 
             // Zufällige nummer für Nummerschild
             int nummer = random.Next(1, 9999);
-
+            #endregion
             var kennzeichen = string.Format("{0} {1} {2}", stadt, buchstabe, nummer);
 
 
@@ -70,6 +74,8 @@ namespace DieGarage.Models
             int spot = random.Next(1, Parkhaus.ParkPlatze + 1);
 
             var contain = new List<int>();
+
+
 
             try
             {
@@ -81,17 +87,39 @@ namespace DieGarage.Models
                     neueFahrzeugen.FahrzeugTyp = fahrzeugenTyp[indexTyp];
                     neueFahrzeugen.Nummerschild = kennzeichen;
 
+
+
+                    for (int i = 0; i < Parkhaus.Etagen; i++)
+                    {
+                        Ebene[i] = new Garage[Parkhaus.ParkPlatze];
+                    }
+
                     for (int i = 0; i < Parkhaus.Etagen; i++)
                     {
                         for (int j = 0; j < Parkhaus.ParkPlatze; j++)
                         {
-                            Ebene[i, j].Fahrzeugen1 = neueFahrzeugen;
-
+                            Ebene[i][j].Fahrzeugen1 = neueFahrzeugen;
                         }
                     }
 
+                    //for (int i = 0; i < Parkhaus.Etagen; i++)
+                    //{
+                    //    for (int j = 0; j < Parkhaus.ParkPlatze; j++)
+                    //    {
+                    //        Ebene[i, j].Fahrzeugen1 = neueFahrzeugen;
+
+                    //    }
+                    //}
+
+
+                    //FahrzeugenTest.Add(spot, neueFahrzeugen);
+
                     FahrzeugenListe.Add(neueFahrzeugen);
 
+                    //foreach (var item in FahrzeugenTest)
+                    //{
+                    //    Console.WriteLine("Key: {0} -- Value: {1}",item.Key, item.Value);
+                    //}
 
                 }
 
@@ -145,7 +173,7 @@ namespace DieGarage.Models
             Parkhaus.ParkPlatze = parkplätze;
             //Erdgeschoss.Etagen = etagen;
 
-            Ebene = new Garage[etagen, parkplätze];
+            Ebene = new Garage[etagen][];
 
             //int[,] test = new int[parkplätze, etagen];
             int[,] test = { { 1, 2, 3 }, { 4, 5, 6 } };
