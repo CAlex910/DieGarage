@@ -14,7 +14,7 @@
         <fieldset>
             <div class="text-center">
                 <button id="btnShowModal" type="button" class="btn btn-m btn-default" style="color:blue; text-decoration:underline;">
-                    Parkhaus
+                    <h4>Parkhaus Erstellen</h4>
                 </button>
             </div>
             <div class="modal fade" tabindex="-1" id="loginModal" data-keyboard="false" data-backdrop="static">
@@ -60,40 +60,3 @@
         });
     </script>
 }
-
-
-@*@using (Html.BeginForm())
-{
-    @Html.EditorForModel()
-
-    <input type="submit" asp-action="FahrzeugenEinfugen" />
-
-}
-@if (Model != null)
-{
-    <p>Autos angelegt</p>
-}
-
-<br />
-
-<h3>@ViewBag.HashCode</h3>*@
-
-
-
-@*@if (Model != null)
-{
-    <table class="table table-bordered">
-        <tr>
-            <th>@Html.DisplayNameFor(m => m.ParkPlatze)</th>
-            <th>@Html.DisplayNameFor(m => m.Etagen)</th>
-        </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(m => item.ParkPlatze)</td>
-                <td>@Html.DisplayFor(m => item.Etagen)</td>
-            </tr>
-        }
-    </table>
-}*@
-

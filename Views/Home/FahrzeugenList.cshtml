@@ -8,26 +8,21 @@
 </div>
 <br />
 
+@*Fahrzeugen einparken*@
 <input type="button" value="Einparken" onclick="location.href='@Url.Action("Einparken")'" />
 
+@*Fahrzeugen ausnparken*@
 <input type="button" value="Ausparken" onclick="location.href='@Url.Action("Ausparken")'" />
 
+@*Freie plätze anzeigen*@
+<div style="text-align:right">
+    @if (Model != null && Model.Count() > 0)
+    {
+        <label>Freie Parkplätze: </label>
+        @ViewData["anzahl"]
+    }
+</div>
 
-@if (Model != null)
-{
-    <table class="table table-bordered">
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.ParkSpot)</th>
-            <th>@Html.DisplayNameFor(model => model.Nummerschild)</th>
-            <th>@Html.DisplayNameFor(model => model.FahrzeugTyp)</th>
-        </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(model => item.ParkSpot)</td>
-                <td>@Html.DisplayFor(model => item.Nummerschild)</td>
-                <td>@Html.DisplayFor(model => item.FahrzeugTyp)</td>
-            </tr>
-        }
-    </table>
-}
+
+@*View mit der Fahrzeugen*@
+<partial name="_FahrzeugenList" />

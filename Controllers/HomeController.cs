@@ -1,6 +1,7 @@
 ﻿using DieGarage.Models;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Diagnostics;
 
 namespace DieGarage.Controllers
@@ -22,9 +23,9 @@ namespace DieGarage.Controllers
 
         public IActionResult FahrzeugenList()
         {
-            return View(repository.FahrzeugenListe.OrderBy(m => m.ParkSpot));
-            //return View(repository.FahrzeugenListe);
-            //return View(repository.Autos.Union(repository.Motorraders));
+            ViewData["anzahl"] = repository.Parkhaus.FreiePlatze;
+
+            return View(repository.FahrzeugenListe.OrderBy(m => m.ParkSpot).OrderBy(m => m.ParkEbene));
         }
 
         public IActionResult FahrzeugenErstellen()
@@ -51,24 +52,15 @@ namespace DieGarage.Controllers
 
         }
 
-        //public IActionResult Suchen()
-        //{
-        //    return View(repository.FahrzeugenListe);
-        //}
-
-        public IActionResult Suchen(string nummerschild)
+        public IActionResult Suchen()
         {
-            return View(repository.FahrzeugenListe.Where(n => n.FahrzeugTyp == nummerschild));
+            return View();
         }
 
-        //[HttpPost]
-        //public IActionResult FahrzeugenEinfugen(Fahrzeugen neueFahrzeugen)
-        //{
-        //    ViewBag.Meldung = repository.FahrzeugEinfugen(neueFahrzeugen);
-        //    Console.WriteLine("test");
-        //    return RedirectToAction("FahrzeugenList");
-        //    //return View(neueFahrzeugen);
-        //}
+        public PartialViewResult SuchergebnisseAnzeigen(string nummernschild)
+        {
+            return PartialView("_FahrzeugenList", repository.FahrzeugenListe.Where(n => n.Nummernschild.Contains(nummernschild)));
+        }
 
         public IActionResult Garage(int parkplätze, int etagen)
         {

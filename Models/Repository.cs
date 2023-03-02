@@ -10,21 +10,22 @@ namespace DieGarage.Models
 {
     public class Repository
     {
-        //public List<Fahrzeugen> Autos { get; set; }
-        public Fahrzeugen Autos { get; set; }
-        //public List<Fahrzeugen> Motorraders { get; set; }
-        public Fahrzeugen Motorraders { get; set; }
+        //public Fahrzeugen Autos { get; set; }
+        //public Fahrzeugen Motorraders { get; set; }
         public List<Fahrzeugen> FahrzeugenListe { get; set; }
-        //public List<List<Fahrzeugen>> FahrzeugenListe = new List<List<Fahrzeugen>>();
+
+        public Fahrzeugen Autos = new Autos();
+        public Fahrzeugen Motorraders = new Motorrader();
+
+        //public Autos Autos { get; set; }
+        //public Motorrader Motorraders { get; set; }
+
 
         // Liste mit besetzte Parkplätze
         List<int> containSpot = new List<int>();
 
         // Liste mit besetzte Nummerschild
         List<string> containSchild = new List<string>();
-
-        public List<Fahrzeugen>[] Ebene { get; set; }
-        public Fahrzeugen[][] Wagen { get; set; }
 
         public Garage Parkhaus { get; set; }
 
@@ -35,6 +36,8 @@ namespace DieGarage.Models
             };
         }
 
+        // #############################################################################
+        #region Fahrzegerstellen
         //public Fahrzeugen FahrzeugenErstellen(Fahrzeugen neueFahrzeugen)
         //{
         //    // Random Objekt erstellen
@@ -51,6 +54,7 @@ namespace DieGarage.Models
 
         //    return neueFahrzeugen;
         //}
+        #endregion
 
         public Fahrzeugen FahrzeugenErstellen(Fahrzeugen neueFahrzeugen)
         {
@@ -59,7 +63,7 @@ namespace DieGarage.Models
             int index = random.Next(2);
 
             //neueFahrzeugen.FahrzeugTyp = "test";
-            neueFahrzeugen.Nummerschild = NummernschildGenerator(containSchild);
+            neueFahrzeugen.Nummernschild = NummernschildGenerator(containSchild);
 
             foreach (var item in FahrzeugenListe)
             {
@@ -69,12 +73,14 @@ namespace DieGarage.Models
             if (index == 0)
             {
                 neueFahrzeugen.FahrzeugTyp = "Auto";
+                //Autos = new Autos(neueFahrzeugen);
                 Autos = neueFahrzeugen;
                 return Autos;
             }
             else if (index == 1)
             {
                 neueFahrzeugen.FahrzeugTyp = "Motorrad";
+                //Motorraders = new Motorrader(neueFahrzeugen);
                 Motorraders = neueFahrzeugen;
                 return Motorraders;
             }
@@ -151,16 +157,23 @@ namespace DieGarage.Models
 
         public string? Einparken(Fahrzeugen fahrzeugen)
         {
+            Random random = new Random();
             // Parkplatz Nummer
             int spot;
+            int etagen = random.Next(1, Parkhaus.Etagen);
 
             try
             {
                 spot = RandomSpot(1, Parkhaus.ParkPlatze, containSpot);
                 fahrzeugen.ParkSpot = spot;
+                fahrzeugen.ParkEbene = etagen;
                 FahrzeugenListe.Add(FahrzeugenErstellen(fahrzeugen));
 
                 containSpot.Add(spot);
+
+                Parkhaus.FreiePlatze = Parkhaus.ParkPlatze - FahrzeugenListe.Count();
+                Console.WriteLine(Parkhaus.FreiePlatze);
+
                 // #########################################################################
                 //if (containSpot.Count == Parkhaus.ParkPlatze)
                 //{
@@ -185,6 +198,9 @@ namespace DieGarage.Models
                     int index = random.Next(FahrzeugenListe.Count());
                     FahrzeugenListe.RemoveAt(index);
                     containSpot.RemoveAt(index);
+
+                    Parkhaus.FreiePlatze = Parkhaus.ParkPlatze - FahrzeugenListe.Count();
+                    Console.WriteLine(Parkhaus.FreiePlatze);
                 }
             }
             catch (Exception e)
@@ -197,7 +213,7 @@ namespace DieGarage.Models
         public void GarageErstellen(int parkplätze, int etagen)
         {
             Parkhaus = new Garage();
-
+                        
             Parkhaus.ParkPlatze = parkplätze;
             Parkhaus.Etagen = etagen;
         }

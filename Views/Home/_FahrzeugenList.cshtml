@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Fahrzeugen>
+
+@if (Model != null && Model.Count() > 0)
+{
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.ParkEbene)</th>
+            <th>@Html.DisplayNameFor(model => model.ParkSpot)</th>
+            <th>@Html.DisplayNameFor(model => model.Nummernschild)</th>
+            <th>@Html.DisplayNameFor(model => model.FahrzeugTyp)</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => item.ParkEbene)</td>
+                <td>@Html.DisplayFor(model => item.ParkSpot)</td>
+                <td>@Html.DisplayFor(model => item.Nummernschild)</td>
+                <td>@Html.DisplayFor(model => item.FahrzeugTyp)</td>
+            </tr>
+        }
+    </table>
+}
