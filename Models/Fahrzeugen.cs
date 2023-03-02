@@ -7,11 +7,11 @@ namespace DieGarage.Models
     {
         public string? Nummerschild { get; set; }
         public string? FahrzeugTyp { get; set; }
+        //public Fahrzeugen? FahrzeugTyp { get; set; }
 
         [ScaffoldColumn(false)]
         public int ParkSpot { get; set; }
         [ScaffoldColumn(false)]
-        public bool IstBesetzt { get; set; }
 
         public Garage? Garage { get; set; }
 

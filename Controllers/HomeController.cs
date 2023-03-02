@@ -23,7 +23,16 @@ namespace DieGarage.Controllers
         public IActionResult FahrzeugenList()
         {
             return View(repository.FahrzeugenListe.OrderBy(m => m.ParkSpot));
+            //return View(repository.FahrzeugenListe);
             //return View(repository.Autos.Union(repository.Motorraders));
+        }
+
+        public IActionResult FahrzeugenErstellen()
+        {
+            Fahrzeugen fahrzeugen = new Fahrzeugen();
+            ViewBag.Meldung = repository.FahrzeugenErstellen(fahrzeugen);
+
+            return RedirectToAction("FahrzeugenList");
         }
 
         public IActionResult Einparken()
@@ -36,10 +45,20 @@ namespace DieGarage.Controllers
 
         public IActionResult Ausparken()
         {
-            Fahrzeugen fahrzeugen= new Fahrzeugen();
+            Fahrzeugen fahrzeugen = new Fahrzeugen();
             ViewBag.Meldung = repository.Ausparken();
             return RedirectToAction("FahrzeugenList");
 
+        }
+
+        //public IActionResult Suchen()
+        //{
+        //    return View(repository.FahrzeugenListe);
+        //}
+
+        public IActionResult Suchen(string nummerschild)
+        {
+            return View(repository.FahrzeugenListe.Where(n => n.FahrzeugTyp == nummerschild));
         }
 
         //[HttpPost]

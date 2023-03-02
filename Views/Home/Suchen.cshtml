@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Fahrzeugen>
+@{
+    ViewData["Title"] = "Suchen";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Parkhaus</h1>
+</div>
+<br />
+
+
+<input type="text" name="nummerschild" />
+<input type="submit" name="nummerschild" value="Suchen" />
+
+@if (Model != null)
+{
+    <form asp-action="">
+        <table class="table table-bordered">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.ParkSpot)</th>
+                <th>@Html.DisplayNameFor(model => model.Nummerschild)</th>
+                <th>@Html.DisplayNameFor(model => model.FahrzeugTyp)</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(model => item.ParkSpot)</td>
+                    <td>@Html.DisplayFor(model => item.Nummerschild)</td>
+                    <td>@Html.DisplayFor(model => item.FahrzeugTyp)</td>
+                </tr>
+            }
+        </table>
+    </form>
+}
