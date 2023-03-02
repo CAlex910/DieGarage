@@ -10,16 +10,10 @@ namespace DieGarage.Models
 {
     public class Repository
     {
-        //public Fahrzeugen Autos { get; set; }
-        //public Fahrzeugen Motorraders { get; set; }
         public List<Fahrzeugen> FahrzeugenListe { get; set; }
 
         public Fahrzeugen Autos = new Autos();
         public Fahrzeugen Motorraders = new Motorrader();
-
-        //public Autos Autos { get; set; }
-        //public Motorrader Motorraders { get; set; }
-
 
         // Liste mit besetzte Parkplätze
         List<int> containSpot = new List<int>();
@@ -36,51 +30,23 @@ namespace DieGarage.Models
             };
         }
 
-        // #############################################################################
-        #region Fahrzegerstellen
-        //public Fahrzeugen FahrzeugenErstellen(Fahrzeugen neueFahrzeugen)
-        //{
-        //    // Random Objekt erstellen
-        //    Random random = new Random();
-
-        //    // Array mit Fahrzeugen Typen
-        //    string[] fahrzeugenTyp = { "Autos", "Motorräder" };
-
-        //    // Ein zufällige index von fahrzeugenTyp
-        //    int indexTyp = random.Next(fahrzeugenTyp.Length);
-
-        //    neueFahrzeugen.FahrzeugTyp = fahrzeugenTyp[indexTyp];
-        //    neueFahrzeugen.Nummerschild = NummernschildGenerator(containSchild);
-
-        //    return neueFahrzeugen;
-        //}
-        #endregion
-
         public Fahrzeugen FahrzeugenErstellen(Fahrzeugen neueFahrzeugen)
         {
             Random random = new Random();
 
             int index = random.Next(2);
 
-            //neueFahrzeugen.FahrzeugTyp = "test";
             neueFahrzeugen.Nummernschild = NummernschildGenerator(containSchild);
-
-            foreach (var item in FahrzeugenListe)
-            {
-                Console.WriteLine(item.FahrzeugTyp);
-            }
 
             if (index == 0)
             {
                 neueFahrzeugen.FahrzeugTyp = "Auto";
-                //Autos = new Autos(neueFahrzeugen);
                 Autos = neueFahrzeugen;
                 return Autos;
             }
             else if (index == 1)
             {
                 neueFahrzeugen.FahrzeugTyp = "Motorrad";
-                //Motorraders = new Motorrader(neueFahrzeugen);
                 Motorraders = neueFahrzeugen;
                 return Motorraders;
             }
@@ -145,6 +111,7 @@ namespace DieGarage.Models
             Random random = new Random();
             int currentSpot = random.Next(min, max + 1);
 
+            // Prüfen ob die Parkplatz besetzt ist
             if (excludeSpot.Count != null)
             {
                 while (excludeSpot.Contains(currentSpot))
@@ -160,6 +127,7 @@ namespace DieGarage.Models
             Random random = new Random();
             // Parkplatz Nummer
             int spot;
+
             int etagen = random.Next(1, Parkhaus.Etagen);
 
             try
@@ -172,13 +140,6 @@ namespace DieGarage.Models
                 containSpot.Add(spot);
 
                 Parkhaus.FreiePlatze = Parkhaus.ParkPlatze - FahrzeugenListe.Count();
-                Console.WriteLine(Parkhaus.FreiePlatze);
-
-                // #########################################################################
-                //if (containSpot.Count == Parkhaus.ParkPlatze)
-                //{
-                //    Console.WriteLine("Parkhaus full");
-                //}
             }
             catch (Exception e)
             {
@@ -200,7 +161,6 @@ namespace DieGarage.Models
                     containSpot.RemoveAt(index);
 
                     Parkhaus.FreiePlatze = Parkhaus.ParkPlatze - FahrzeugenListe.Count();
-                    Console.WriteLine(Parkhaus.FreiePlatze);
                 }
             }
             catch (Exception e)
