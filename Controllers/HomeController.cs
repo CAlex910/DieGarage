@@ -48,8 +48,8 @@ namespace DieGarage.Controllers
         {
             Fahrzeugen fahrzeugen = new Fahrzeugen();
             ViewBag.Meldung = repository.Ausparken();
-            return RedirectToAction("FahrzeugenList");
 
+            return RedirectToAction("FahrzeugenList");
         }
 
         public IActionResult Suchen()
@@ -57,9 +57,9 @@ namespace DieGarage.Controllers
             return View();
         }
 
-        public PartialViewResult SuchergebnisseAnzeigen(string nummernschild)
+        public IActionResult SuchergebnisseAnzeigen(string nummernschild)
         {
-            return PartialView("_FahrzeugenList", repository.FahrzeugenListe.Where(n => n.Nummernschild.Contains(nummernschild)));
+            return View("_FahrzeugenList", repository.FahrzeugenListe.Where(n => n.Nummernschild.Contains(nummernschild)));
         }
 
         public IActionResult Garage(int parkplätze, int etagen)

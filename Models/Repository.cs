@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -127,16 +128,18 @@ namespace DieGarage.Models
             Random random = new Random();
             // Parkplatz Nummer
             int spot;
-
-            int etagen = random.Next(1, Parkhaus.Etagen);
+            int etage;
 
             try
             {
                 spot = RandomSpot(1, Parkhaus.ParkPlatze, containSpot);
-                fahrzeugen.ParkSpot = spot;
-                fahrzeugen.ParkEbene = etagen;
-                FahrzeugenListe.Add(FahrzeugenErstellen(fahrzeugen));
+                etage = random.Next(1, Parkhaus.Etagen +1);
 
+                fahrzeugen.ParkEbene = etage;
+                fahrzeugen.ParkSpot = spot;
+
+                FahrzeugenListe.Add(FahrzeugenErstellen(fahrzeugen));
+                
                 containSpot.Add(spot);
 
                 Parkhaus.FreiePlatze = Parkhaus.ParkPlatze - FahrzeugenListe.Count();
@@ -157,6 +160,8 @@ namespace DieGarage.Models
                 {
                     Random random = new Random();
                     int index = random.Next(FahrzeugenListe.Count());
+
+                    // Fahrzeug von zufällige Parkplatz ausparken
                     FahrzeugenListe.RemoveAt(index);
                     containSpot.RemoveAt(index);
 
