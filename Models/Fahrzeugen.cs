@@ -8,7 +8,6 @@ namespace DieGarage.Models
     {
         public string? Nummernschild { get; set; }
         public string? FahrzeugTyp { get; set; }
-        //public Fahrzeugen? FahrzeugTyp { get; set; }
 
         [DisplayName("Parkplatz")]
         public int ParkSpot { get; set; }
